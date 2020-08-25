@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec ts-node --watch src src/index.ts",
+    "start": "ts-node-dev src/index.ts",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json"
@@ -41,6 +41,7 @@
     "mobx": "^5.15.6",
     "moment": "^2.27.0",
     "socks-proxy-agent": "^5.0.0",
-    "tomon-sdk": "^0.1.4"
+    "tomon-sdk": "^0.1.4",
+    "ts-node-dev": "^1.0.0-pre.60"
   }
 }

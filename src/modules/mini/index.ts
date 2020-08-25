@@ -18,7 +18,7 @@ async function miniKancolleModule(bot: PowerfulBot) {
   bot.replyMessage(PREFIX, (e, action, ...params) => {
     const senderId = e.d.author?.id;
     const atSenderStr = `<@${senderId}> `;
-    const getMessage = (str: string) => `${atSenderStr}${str}`;
+    const getMessage = (str: string) => `${atSenderStr}\n${str}`;
     const user = store.getUserById(senderId);
     switch (action) {
       case 'add-r':

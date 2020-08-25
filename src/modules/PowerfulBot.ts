@@ -9,7 +9,7 @@ interface SendMessageOptions {
   files?: any[];
 }
 
-const log = debug('bot:1');
+const log = debug('index');
 
 type MessageGetter = (e: WSPayload<'MESSAGE_CREATE'>) => string;
 
@@ -32,10 +32,45 @@ class PowerfulBot extends Bot {
     prefix = '/',
   ) {
     const mapKey = `${prefix}${key}`;
+    log(mapKey);
 
     if (this._registeredMessageMap[mapKey]) {
       log('已经注册过该关键字了');
       return;
+    }
+
+    if (_.isEmpty(this._registeredMessageMap)) {
+      this.on('MESSAGE_CREATE', (e) => {
+        if (e.d.author.id === this.id) {
+          return;
+        }
+
+        log('e', e);
+
+        const channelId = e.d.channel_id;
+        if (this._bypassChannels.length && !this._bypassChannels.includes(channelId)) {
+          return;
+        }
+        const messageContent = e.d.content;
+        const [command] = messageContent.trim().split(/\s+/g);
+        if (command !== mapKey) {
+          return;
+        }
+
+        log('command', command, this._registeredMessageMap);
+
+        const messageGetter = this._registeredMessageMap[command];
+        const message = messageGetter(e);
+
+        if (!messageGetter || !message) {
+          return;
+        }
+
+        this.sendMessageToChannel({
+          channelId,
+          message,
+        });
+      });
     }
 
     this._registeredMessageMap[mapKey] = (e: WSPayload<'MESSAGE_CREATE'>) => {
@@ -43,30 +78,6 @@ class PowerfulBot extends Bot {
       const [, action, ...params] = messageContent.trim().split(/\s+/g);
       return getMessage(e, action, ...params);
     };
-
-    if (!_.isEmpty(this._registeredMessageMap)) {
-      return;
-    }
-
-    this.on('MESSAGE_CREATE', (e) => {
-      const channelId = e.d.channel_id;
-      if (this._bypassChannels.length && !this._bypassChannels.includes(channelId)) {
-        return;
-      }
-      const messageContent = e.d.content;
-      const [command] = messageContent.trim().split(/\s+/g);
-      const messageGetter = this._registeredMessageMap[command];
-      const message = messageGetter(e);
-
-      if (!messageGetter || !message) {
-        return;
-      }
-
-      this.sendMessageToChannel({
-        channelId,
-        message,
-      });
-    });
   }
 
   public sendMessageToChannel(options: SendMessageOptions) {

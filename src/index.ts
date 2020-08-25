@@ -1,7 +1,7 @@
 global.APP_PATH = __dirname;
 
 import dotenv from 'dotenv';
-import debug from 'debug';
+import { argv } from 'process';
 import SocksProxyAgent from 'socks-proxy-agent';
 
 import Bot from './modules/PowerfulBot';
@@ -10,15 +10,17 @@ import miniKancolleModule from './modules/mini';
 
 const agent = SocksProxyAgent('socks://127.0.0.1') as any;
 
-const botOptions = {
-  axiosConfig: {
-    httpAgent: agent,
-    httpsAgent: agent,
-  },
-  wsOptions: {
-    agent,
-  },
-};
+const botOptions = argv.includes('--proxy')
+  ? {
+      axiosConfig: {
+        httpAgent: agent,
+        httpsAgent: agent,
+      },
+      wsOptions: {
+        agent,
+      },
+    }
+  : void 0;
 
 const bot = new Bot(botOptions);
 
