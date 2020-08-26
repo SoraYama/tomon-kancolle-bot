@@ -42,7 +42,7 @@
     "mobx": "^5.15.6",
     "moment": "^2.27.0",
     "socks-proxy-agent": "^5.0.0",
-    "tomon-sdk": "^0.1.4",
+    "tomon-sdk": "^0.2.0",
     "ts-node-dev": "^1.0.0-pre.60"
   },
   "husky": {

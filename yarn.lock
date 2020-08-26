@@ -2180,10 +2180,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tomon-sdk@^0.1.4:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/tomon-sdk/-/tomon-sdk-0.1.7.tgz#2d96bed65df3a149fcf69434bafad3b1bb3cedd1"
-  integrity sha512-6LXgqpNkDIDt6+4ngjRAQNiinZLap7QHKlyPpqCdIXqI+pIPULKCwJpeoWhJjkC7P2l4xo4lUBIUhxArU8SQLg==
+tomon-sdk@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tomon-sdk/-/tomon-sdk-0.2.0.tgz#df9af0620cd61f72867bdb405072d12a8e1c4d61"
+  integrity sha512-FCnb3KBRFEZ+8B1BzZLupUV2Py//XuJ6za1PRaUqfkEEssXmExhTpvsOJRiODQnWpCtx4lGb6h3jszDuVOiWaA==
   dependencies:
     "@types/pako" "^1.0.1"
     "@types/url-join" "^4.0.0"
