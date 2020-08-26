@@ -8,7 +8,7 @@ export const INIT_STORE_DATA = {
   orders: [],
 };
 export const RESOURCE_MAX_LIMIT = 300000;
-export const PREFIX = 'fleet';
+export const PREFIX = '/fleet';
 export const BUILD_RESOURCE_MAX = 7000;
 export const MAX_HOME_LEVEL = levelConfig.length;
 export const LEAST_RESOURCE = [1500, 1500, 2000, 1000];
