@@ -1,18 +1,21 @@
-FROM node:alpine AS base
+FROM node:12-alpine
+
+RUN sed -i 's#http://dl-cdn.alpinelinux.org#https://mirrors.ustc.edu.cn#g' /etc/apk/repositories
+
+RUN apk add --no-cache tzdata
+
+ENV TZ Asia/Shanghai
+
 WORKDIR /app
 
-FROM base AS builder
+COPY ./package.json ./package.json
+
+COPY ./yarn.lock ./yarn.lock
+
+RUN yarn --registry=https://registry.npm.taobao.org
+
 COPY . .
 
-RUN yarn install --production && \
-  cp -R node_modules /tmp/node_modules && \
-  yarn install && \
-  yarn build
+RUN yarn build
 
-FROM base AS release
-COPY --from=builder /app/resources ./resources
-COPY --from=builder /tmp/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./
-EXPOSE 3000
-ENTRYPOINT [ "node", "dist/index.js" ]
+CMD ["node", "dist/index.js"]

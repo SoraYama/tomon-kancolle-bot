@@ -52,13 +52,13 @@ class Order {
   public store: MiniKancolleStore;
 
   @observable
-  public id: number = 0;
+  public id = 0;
 
   @observable
   public status: OrderStatus = OrderStatus.CREATED;
 
   @observable
-  public createdAt: number = 0;
+  public createdAt = 0;
 
   @observable
   public toTrade: number[] = [];
@@ -71,7 +71,7 @@ class Order {
 
   public orderType: OrderType = OrderType.SHIP_TO_RESOURCE;
 
-  public sellerId: string = '';
+  public sellerId = '';
 
   private disposeReaction: IReactionDisposer;
 

@@ -6,7 +6,7 @@ import { WSPayload } from 'tomon-sdk/lib/types';
 interface SendMessageOptions {
   channelId: string;
   message: string;
-  files?: any[];
+  files?: string[];
 }
 
 const log = debug('index');

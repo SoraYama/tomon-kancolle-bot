@@ -8,6 +8,7 @@ import Bot from './modules/PowerfulBot';
 import { MINI_KANCOLLE_CHANNELS } from './configs';
 import miniKancolleModule from './modules/mini';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const agent = SocksProxyAgent('socks://127.0.0.1') as any;
 
 const botOptions = argv.includes('--proxy')

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  tomon-bot:
+    build: .
+    image: tomon-bot
+    container_name: 'tomon-bot'
+    ports:
+      - '1551:1551'
+    volumes:
+      - db:/app/db
+      - logs:/app/logs
+volumes:
+  db:
+  logs:

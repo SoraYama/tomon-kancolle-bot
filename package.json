@@ -1,31 +1,32 @@
 {
   "name": "tomon-kancolle",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A silly bot for tomon",
+  "main": "src/index.ts",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "eslint --ext .ts --fix ./src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gigakuma/tomon-bot-boilerplate.git"
+    "url": "git+https://github.com/SoraYama/tomon-kancolle-bot.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "SoraYama <sorayamahou@gmail.com>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gigakuma/tomon-bot-boilerplate/issues"
-  },
-  "homepage": "https://github.com/gigakuma/tomon-bot-boilerplate#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
     "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.9.7"
   },
   "private": true,
@@ -43,5 +44,15 @@
     "socks-proxy-agent": "^5.0.0",
     "tomon-sdk": "^0.1.4",
     "ts-node-dev": "^1.0.0-pre.60"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
   }
 }
