@@ -8,8 +8,8 @@ services:
     ports:
       - '1551:1551'
     volumes:
-      - db:/app/db
-      - logs:/app/logs
+      - db:/src/db
+      - logs:/src/logs
 volumes:
   db:
   logs:
