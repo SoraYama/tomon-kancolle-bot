@@ -14,8 +14,8 @@ import me from './handlers/me';
 import order from './handlers/order';
 import PowerfulBot from '../PowerfulBot';
 
-async function miniKancolleModule(bot: PowerfulBot) {
-  bot.replyMessage(PREFIX, (e, action, ...params) => {
+function miniKancolleModule(bot: PowerfulBot) {
+  bot.replyMessage(PREFIX.slice(1), (e, action, ...params) => {
     const senderId = e.d.author?.id;
     const atSenderStr = `<@${senderId}> `;
     const getMessage = (str: string) => `${atSenderStr}\n${str}`;
@@ -58,7 +58,9 @@ async function miniKancolleModule(bot: PowerfulBot) {
           return getMessage(`还未建立角色哦, 请输入 ${PREFIX} ${ACTIONS.start} 来开始`);
         }
         if (params.length < 4) {
-          return getMessage('投入资源输入错误, 请按照 "油, 弹, 钢, 铝, 次数" 的顺序输入并用空格分开');
+          return getMessage(
+            '投入资源输入错误, 请按照 "油, 弹, 钢, 铝, 次数" 的顺序输入并用空格分开',
+          );
         }
         const resource = params.slice(0, 4);
         if (params[4] === 'nyk') {
@@ -148,7 +150,9 @@ async function miniKancolleModule(bot: PowerfulBot) {
           return getMessage(`资源类型输入错误: 1, 2, 3, 4 分别对应 油, 弹, 钢, 铝`);
         }
         const rate = store.getTradeRate(sourceType);
-        return getMessage(`目前${RESOURCE_NAMES[sourceType - 1]}对其他资源的交换比率为[${rate.join(', ')}]`);
+        return getMessage(
+          `目前${RESOURCE_NAMES[sourceType - 1]}对其他资源的交换比率为[${rate.join(', ')}]`,
+        );
       }
 
       case ACTIONS.order: {

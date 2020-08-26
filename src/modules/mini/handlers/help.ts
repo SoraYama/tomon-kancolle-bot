@@ -7,7 +7,9 @@ const help = (params: string[], getMessage: (content: string) => string) => {
   const [command] = params;
   if (!command) {
     const actions = _.map(ACTIONS, (v) => v).join(' | ');
-    return getMessage(`请加上指令名${actions}, 比如说 "${PREFIX} ${ACTIONS.help} ${ACTIONS.build}"`);
+    return getMessage(
+      `请加上指令名${actions}, 比如说 "${PREFIX} ${ACTIONS.help} ${ACTIONS.build}"`,
+    );
   }
   if (
     _(ACTIONS)
