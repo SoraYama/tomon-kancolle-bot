@@ -29,12 +29,10 @@ class PowerfulBot extends Bot {
   public replyMessage(
     key: string,
     getMessage: (e: WSPayload<'MESSAGE_CREATE'>, action: string, ...params: string[]) => string,
-    prefix = '/',
   ) {
-    const mapKey = `${prefix}${key}`;
-    log(mapKey);
+    log('✅已注册的key', key);
 
-    if (this._registeredMessageMap[mapKey]) {
+    if (this._registeredMessageMap[key]) {
       log('已经注册过该关键字了');
       return;
     }
@@ -47,22 +45,28 @@ class PowerfulBot extends Bot {
 
         log('e', e);
 
+        log('_bypassChannels', this._bypassChannels);
+
         const channelId = e.d.channel_id;
+
         if (this._bypassChannels.length && !this._bypassChannels.includes(channelId)) {
           return;
         }
+
         const messageContent = e.d.content;
         const [command] = messageContent.trim().split(/\s+/g);
-        if (command !== mapKey) {
+
+        log('command', command, key, key === command);
+
+        const messageGetter = this._registeredMessageMap[command];
+
+        if (!messageGetter) {
           return;
         }
 
-        log('command', command, this._registeredMessageMap);
-
-        const messageGetter = this._registeredMessageMap[command];
         const message = messageGetter(e);
 
-        if (!messageGetter || !message) {
+        if (!message) {
           return;
         }
 
@@ -73,9 +77,10 @@ class PowerfulBot extends Bot {
       });
     }
 
-    this._registeredMessageMap[mapKey] = (e: WSPayload<'MESSAGE_CREATE'>) => {
+    this._registeredMessageMap[key] = (e: WSPayload<'MESSAGE_CREATE'>) => {
       const messageContent = e.d.content;
       const [, action, ...params] = messageContent.trim().split(/\s+/g);
+      log('🚢收到消息', action, ...params);
       return getMessage(e, action, ...params);
     };
   }

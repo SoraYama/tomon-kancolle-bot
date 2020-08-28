@@ -1,0 +1,3 @@
+[submodule "assets/ArknightsData"]
+	path = assets/ArknightsData
+	url = git@github.com:Dimbreath/ArknightsData.git

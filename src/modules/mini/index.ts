@@ -15,7 +15,7 @@ import order from './handlers/order';
 import PowerfulBot from '../PowerfulBot';
 
 function miniKancolleModule(bot: PowerfulBot) {
-  bot.replyMessage(PREFIX.slice(1), (e, action, ...params) => {
+  bot.replyMessage(PREFIX, (e, action, ...params) => {
     const senderId = e.d.author?.id;
     const atSenderStr = `<@${senderId}> `;
     const getMessage = (str: string) => `${atSenderStr}\n${str}`;

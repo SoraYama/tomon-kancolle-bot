@@ -7,6 +7,7 @@ import SocksProxyAgent from 'socks-proxy-agent';
 import Bot from './modules/PowerfulBot';
 import { MINI_KANCOLLE_CHANNELS } from './configs';
 import miniKancolleModule from './modules/mini';
+import arkModule from './modules/ark';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const agent = SocksProxyAgent('socks://127.0.0.1') as any;
@@ -39,6 +40,7 @@ bot.start(BOT_TOKEN);
 
 const loadModules = () => {
   miniKancolleModule(bot);
+  arkModule(bot);
 };
 
 bot.on('READY', () => {
