@@ -11,7 +11,7 @@ interface SendMessageOptions {
 
 const log = debug('index');
 
-type MessageGetter = (e: WSPayload<'MESSAGE_CREATE'>) => string;
+type MessageGetter = (e: WSPayload<'MESSAGE_CREATE'>) => string | string[];
 
 class PowerfulBot extends Bot {
   private _registeredMessageMap: Record<string, MessageGetter> = {};
@@ -28,7 +28,11 @@ class PowerfulBot extends Bot {
 
   public replyMessage(
     key: string,
-    getMessage: (e: WSPayload<'MESSAGE_CREATE'>, action: string, ...params: string[]) => string,
+    getMessage: (
+      e: WSPayload<'MESSAGE_CREATE'>,
+      action: string,
+      ...params: string[]
+    ) => string | string[],
   ) {
     log('✅已注册的key', key);
 
@@ -38,7 +42,7 @@ class PowerfulBot extends Bot {
     }
 
     if (_.isEmpty(this._registeredMessageMap)) {
-      this.on('MESSAGE_CREATE', (e) => {
+      this.on('MESSAGE_CREATE', async (e) => {
         if (e.d.author.id === this.id) {
           return;
         }
@@ -70,10 +74,19 @@ class PowerfulBot extends Bot {
           return;
         }
 
-        this.sendMessageToChannel({
-          channelId,
-          message,
-        });
+        if (Array.isArray(message)) {
+          for (let i = 0; i < message.length; i++) {
+            await this.sendMessageToChannel({
+              channelId,
+              message: message[i],
+            });
+          }
+        } else {
+          this.sendMessageToChannel({
+            channelId,
+            message,
+          });
+        }
       });
     }
 
@@ -85,9 +98,9 @@ class PowerfulBot extends Bot {
     };
   }
 
-  public sendMessageToChannel(options: SendMessageOptions) {
+  public async sendMessageToChannel(options: SendMessageOptions) {
     const { channelId, message, files } = options;
-    this.api.route(`/channels/${channelId}/messages`).post({
+    await this.api.route(`/channels/${channelId}/messages`).post({
       data: {
         content: message,
       },
