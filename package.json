@@ -4,8 +4,8 @@
   "description": "A silly bot for tomon",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
-    "build": "tsc",
+    "dev": "ts-node-dev src/index.ts",
+    "start": "ts-node src/index.ts",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint --ext .ts --fix ./src"
   },

@@ -16,6 +16,4 @@ RUN yarn --registry=https://registry.npm.taobao.org
 
 COPY . .
 
-RUN yarn build
-
-CMD ["node", "dist/index.js"]
+CMD ["yarn", "start"]
